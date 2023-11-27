@@ -11,4 +11,7 @@ ${BIN}: main.o ${OBJ}
 clean:
 	${RM} ${OBJ} ${BIN} main.o
 
-.PHONY: all clean
+check: ${BIN}
+	./${BIN}
+
+.PHONY: all clean check
