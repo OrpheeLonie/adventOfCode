@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     while (!infile.eof())
     {
         infile >> a >> b;
-        if (infile.eof())
+        if (infile.fail())
             break;
 
         int j1 = a - 'A';
