@@ -15,6 +15,30 @@ void part1(char a, char b, int &score)
     score = score + j2 + 1;
 }
 
+void part2(char a, char b, int &score)
+{
+    int j1 = a - 'A';
+    int j2;
+    switch(b)
+    {
+        case 'X':
+            j2 = j1 + 2;
+            break;
+
+        case 'Y':
+            j2 = j1;
+            score += 3;
+            break;
+
+        case 'Z':
+            j2 = j1 + 1;
+            score += 6;
+            break;
+    }
+
+    score = score + (j2 % 3) + 1;
+}
+
 int main(int argc, char** argv)
 {
     if (argc != 2)
@@ -29,6 +53,7 @@ int main(int argc, char** argv)
     char b;
 
     int score_part1 = 0;
+    int score_part2 = 0;
     while (!infile.eof())
     {
         infile >> a >> b;
@@ -36,9 +61,11 @@ int main(int argc, char** argv)
             break;
 
         part1(a, b, score_part1);
+        part2(a, b, score_part2);
     }
 
-    std::cout << score_part1 << '\n';
+    std::cout << "part1: " << score_part1 << '\n';
+    std::cout << "part2: " << score_part2 << '\n';
 
     infile.close();
 
