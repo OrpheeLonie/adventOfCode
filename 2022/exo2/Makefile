@@ -12,6 +12,6 @@ clean:
 	${RM} ${OBJ} ${BIN} main.o
 
 check: ${BIN}
-	./${BIN}
+	./${BIN} input
 
 .PHONY: all clean check
