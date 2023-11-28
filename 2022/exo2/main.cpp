@@ -1,6 +1,20 @@
 #include <iostream>
 #include <fstream>
 
+void part1(char a, char b, int &score)
+{
+    int j1 = a - 'A';
+    int j2 = b - 'X';
+    int sub = j2 - j1;
+
+    if (sub == 0)
+        score += 3;
+    else if (sub == 1 || sub == -2)
+        score += 6;
+
+    score = score + j2 + 1;
+}
+
 int main(int argc, char** argv)
 {
     if (argc != 2)
@@ -14,30 +28,17 @@ int main(int argc, char** argv)
     char a;
     char b;
 
-    int score = 0;
+    int score_part1 = 0;
     while (!infile.eof())
     {
         infile >> a >> b;
         if (infile.fail())
             break;
 
-        int j1 = a - 'A';
-        int j2 = b - 'X';
-        int sub = j2 - j1;
-
-        if (sub == 0)
-            score += 3;
-        else if (sub == 1 || sub == -2)
-            score += 6;
-
-        //std::cout << "earn " << j2 + 1 << " point\n";
-
-        score = score + j2 + 1;
-
-        //std::cout << a << " " << b << "\n";
+        part1(a, b, score_part1);
     }
 
-    std::cout << score << '\n';
+    std::cout << score_part1 << '\n';
 
     infile.close();
 
