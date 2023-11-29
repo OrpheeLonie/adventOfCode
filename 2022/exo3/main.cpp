@@ -1,6 +1,16 @@
 #include <iostream>
 #include <fstream>
 
+bool is_present_for_all_maps(int *maps, int count, char c)
+{
+    for (int i = 0; i < count; i++)
+    {
+        if (!maps[255 * i + c])
+            return false;
+    }
+    return true;
+}
+
 int count_score(char c)
 {
     if (c <= 'z' && c >= 'a')
@@ -8,29 +18,27 @@ int count_score(char c)
     return c - 'A' + 27;
 }
 
-void part1(std::string line, int &output)
+void part1(std::string *lines, int count, int &output)
 {
-    int length = line.length() / 2;
-    int map1[255] = {0};
-    int map2[255] = {0};
+    int length = lines[0].length();
+    int *maps = new int[count * 255];
+
     for (int i = 0; i < length; i++)
     {
-        char c1 = line[i], c2 = line[i + length];
-        map1[c1] = 1;
-        map2[c2] = 1;
-
-        if (map2[c1])
+        for (int j = 0; j < count; j++)
         {
-            output += count_score(c1);
-            return;
-        }
+            char c = lines[j][i];
+            maps[255 * j + c] = 1;
 
-        if (map1[c2])
-        {
-            output += count_score(c2);
-            return;
+            if (is_present_for_all_maps(maps, count, c))
+            {
+                output += count_score(c);
+                delete[] maps;
+                return;
+            }
         }
     }
+    std::cerr << "Did not find matching value\n";
 }
 
 void part2(std::string line, int &output)
@@ -53,7 +61,11 @@ int main(int argc, char** argv)
     int output_part2 = 0;
     while (getline(infile, line))
     {
-        part1(line, output_part1);
+        int length = line.length() / 2;
+        std::string *lines = new std::string[2] {line.substr(0, length), line.substr(length, line.length())};
+        part1(lines, 2, output_part1);
+        delete[] lines;
+
         part2(line, output_part2);
     }
 
