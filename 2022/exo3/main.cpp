@@ -22,6 +22,8 @@ void part1(std::string *lines, int count, int &output)
 {
     int length = lines[0].length();
     int *maps = new int[count * 255];
+    for (int i = 0; i < count * 255; i++)
+        maps[i] = 0;
 
     for (int i = 0; i < length; i++)
     {
