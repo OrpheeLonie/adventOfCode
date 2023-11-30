@@ -20,14 +20,14 @@ int count_score(char c)
 
 void part1(std::string *lines, int count, int &output)
 {
-    int length = lines[0].length();
     int *maps = new int[count * 255];
     for (int i = 0; i < count * 255; i++)
         maps[i] = 0;
 
-    for (int i = 0; i < length; i++)
+    for (int j = 0; j < count; j++)
     {
-        for (int j = 0; j < count; j++)
+        int length = lines[j].length();
+        for (int i = 0; i < length; i++)
         {
             char c = lines[j][i];
             maps[255 * j + c] = 1;
@@ -41,10 +41,6 @@ void part1(std::string *lines, int count, int &output)
         }
     }
     std::cerr << "Did not find matching value\n";
-}
-
-void part2(std::string line, int &output)
-{
 }
 
 int main(int argc, char** argv)
@@ -67,14 +63,28 @@ int main(int argc, char** argv)
         std::string *lines = new std::string[2] {line.substr(0, length), line.substr(length, line.length())};
         part1(lines, 2, output_part1);
         delete[] lines;
-
-        part2(line, output_part2);
     }
+    infile.close();
 
     std::cout << "part1: " << output_part1 << '\n';
-    std::cout << "part2: " << output_part2 << '\n';
 
-    infile.close();
+
+    std::string line1, line2;
+    std::ifstream infile2(argv[1]);
+    while (getline(infile2, line))
+    {
+        int length = line.length();
+        getline(infile2,line1);
+        getline(infile2,line2);
+        std::string *lines = new std::string[3] {line, line1, line2};
+
+        part1(lines, 3, output_part2);
+
+        delete[] lines;
+    }
+    infile2.close();
+
+    std::cout << "part2: " << output_part2 << '\n';
 
     return 0;
 }
