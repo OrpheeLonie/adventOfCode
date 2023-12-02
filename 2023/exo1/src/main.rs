@@ -62,13 +62,13 @@ fn parse_line(line: &str) -> u32 {
         }
 
         let right_index = line.rfind((b'1' + i) as char);
-        if right_index != None && right_index.unwrap() > last_index {
+        if right_index != None && right_index.unwrap() >= last_index {
             last_index = right_index.unwrap();
             last = (i + 1) as u32;
         }
 
         let right_index = line.rfind(l1[i as usize]);
-        if right_index != None && right_index.unwrap() > last_index {
+        if right_index != None && right_index.unwrap() >= last_index {
             last_index = right_index.unwrap();
             last = (i + 1) as u32;
         }
